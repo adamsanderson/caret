@@ -31,13 +31,11 @@ Caret.prototype.bind = function(el) {
 };
 
 Caret.prototype.parentElement = function(){
+  var selection, node;
+  
   if (document.getSelection){
     selection = document.getSelection();
-    if (selection.rangeCount){
-      node = selection.getRangeAt(0).startContainer;
-    } else {
-      node = document.body;
-    }
+    node = document.focusNode;
   } else {
     node = document.selection.createRange().parentElement();
   }
