@@ -1,0 +1,16 @@
+{
+  "name": "caret",
+  "repo": "adamsanderson/caret",
+  "description": "Listen to and manipulate the text caret.",
+  "version": "0.0.1",
+  "keywords": [],
+  "dependencies": {
+    "component/emitter": "*",
+    "component/event": "*"
+  },
+  "development": {},
+  "license": "MIT",
+  "scripts": [
+    "index.js"
+  ]
+}

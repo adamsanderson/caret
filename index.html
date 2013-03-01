@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+  	<meta charset="utf-8">
+  	<title>WYSIWYG</title>
+  	
+  	<meta name="author" content="Adam Sanderson">
+  	<link rel="stylesheet" href="build/build.css" type="text/css" media="screen" charset="utf-8">
+    <style type="text/css" media="screen">
+      body {
+        padding: 20px;
+        font-family: sans-serif;
+        background: white;
+      }
+      
+      footer {
+        position: fixed;
+        bottom: 20px;
+        background: white;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Caret</h1>
+    <div contenteditable="true" id='content'>
+      <p>
+        This is a <i>demo</i> of the <code>Caret</code> component.  
+        Click here and move the caret around either with the mouse or the keyboard.
+      </p>
+      
+      <p>
+        You can use this to simplify auto completion, and do other fancy things.
+      </p>
+    </div>
+    <footer>
+      See the <a href='https://github.com/adamsanderson/wysiwyg/'>GitHub repository</a> for more information.
+    </footer>
+    <script src="build/build.js" type="text/javascript" charset="utf-8"></script>
+    <script>
+      var Caret = require('caret');
+      var el    = document.getElementById('content');
+      var caret = new Caret(el);
+      
+      caret.on('change', function(){
+        console.log(this, this.parentElement());
+      });
+            
+    </script>
+  </body>
+</html>
