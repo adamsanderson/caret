@@ -34,8 +34,8 @@ Caret.prototype.parentElement = function(){
   var selection, node;
   
   if (document.getSelection){
-    selection = document.getSelection();
-    node = document.focusNode;
+    selection = document.getSelection().focusNode;
+    node = selection;
   } else {
     node = document.selection.createRange().parentElement();
   }
