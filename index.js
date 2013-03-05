@@ -13,8 +13,6 @@ module.exports = Caret;
 function Caret(el) {
   this.el = el || document;
   this.bind(el);
-  
-  
 }
 
 Emitter(Caret.prototype);
@@ -31,11 +29,10 @@ Caret.prototype.bind = function(el) {
 };
 
 Caret.prototype.parentElement = function(){
-  var selection, node;
+  var node;
   
   if (document.getSelection){
-    selection = document.getSelection().focusNode;
-    node = selection;
+    node = document.getSelection().focusNode;
   } else {
     node = document.selection.createRange().parentElement();
   }

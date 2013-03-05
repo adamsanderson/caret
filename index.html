@@ -19,6 +19,10 @@
         bottom: 20px;
         background: white;
       }
+      
+      .parent-element {
+        outline: 1px solid #F00;
+      }
     </style>
   </head>
   <body>
@@ -30,8 +34,14 @@
       </p>
       
       <p>
-        You can use this to simplify auto completion, and do other fancy things.
+        You can use this to:
       </p>
+      
+      <ul>
+        <li>Simplify autocompletion</li>
+        <li>Build <a href='http://adamsanderson.github.com/wysiwyg/'>WYSIWYG</a> tools</li>
+        <li>Other great things!</li>
+      </ul>
     </div>
     <footer>
       See the <a href='https://github.com/adamsanderson/wysiwyg/'>GitHub repository</a> for more information.
@@ -43,7 +53,13 @@
       var caret = new Caret(el);
       
       caret.on('change', function(){
-        console.log(this, this.parentElement());
+        var lastParent = document.querySelector('.parent-element');
+        var currentParent = this.parentElement();
+        
+        if (lastParent != currentParent){
+          if (lastParent) lastParent.setAttribute("class", "");
+          currentParent.setAttribute("class", "parent-element");
+        }
       });
             
     </script>
