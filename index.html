@@ -80,8 +80,6 @@
         var currentParent = this.parentElement();
         
         if (lastParent != currentParent){
-          if (lastParent) lastParent.setAttribute("class", "");
-          currentParent.setAttribute("class", "parent-element");
           tag.textContent = currentParent.tagName;
         }
         

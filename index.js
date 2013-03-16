@@ -1,14 +1,13 @@
 var Emitter = require('emitter');
 var events = require('event');
+
 var ELEMENT_NODE = document.ELEMENT_NODE;
+var TEXT_NODE    = document.TEXT_NODE;
+
+var BEFORE = -1;
+var AFTER  =  1;
 
 module.exports = Caret;
-
-
-// var caret = new Caret(getElementById('content'))
-// var el = caret.parentElement();
-// var text = caret.precedingText();
-// var text = caret.followingText();
 
 function Caret(el) {
   this.el = el || document;
@@ -40,31 +39,40 @@ Caret.prototype.parentElement = function(){
   return node.nodeType == ELEMENT_NODE ? node : node.parentElement;
 };
 
+/**
+  Returns text before the caret within the current element.
+*/
 Caret.prototype.textBefore = function(){
-  var node, selection, offset;
-  
   if (document.getSelection){
-    selection = document.getSelection();
-    node = selection.focusNode;
-    offset = selection.focusOffset;
-    
-    return node.substringData(0,offset);
-    
+    return getText(BEFORE);
   } else {
     throw "TODO";
   }
 };
 
+/**
+  Returns text after the caret within the current element.
+*/
 Caret.prototype.textAfter = function(){
-  var node, selection, offset;
-  
   if (document.getSelection){
-    selection = document.getSelection();
-    node = selection.focusNode;
-    offset = selection.focusOffset;
-    return node.substringData(offset, node.length-1);
-    
+    return getText(AFTER);
   } else {
     throw "TODO";
   }
 };
+
+function getText(direction){
+  var selection = document.getSelection();
+  var node      = selection.focusNode;
+  var offset    = selection.focusOffset;
+  
+  if (node.nodeType == ELEMENT_NODE){
+    return '';
+  }
+  
+  if (direction === BEFORE){
+    return node.substringData(0, offset); 
+  } else {
+    return node.substringData(offset, node.length-1); 
+  }
+}
