@@ -39,3 +39,32 @@ Caret.prototype.parentElement = function(){
   
   return node.nodeType == ELEMENT_NODE ? node : node.parentElement;
 };
+
+Caret.prototype.textBefore = function(){
+  var node, selection, offset;
+  
+  if (document.getSelection){
+    selection = document.getSelection();
+    node = selection.focusNode;
+    offset = selection.focusOffset;
+    
+    return node.substringData(0,offset);
+    
+  } else {
+    throw "TODO";
+  }
+};
+
+Caret.prototype.textAfter = function(){
+  var node, selection, offset;
+  
+  if (document.getSelection){
+    selection = document.getSelection();
+    node = selection.focusNode;
+    offset = selection.focusOffset;
+    return node.substringData(offset, node.length-1);
+    
+  } else {
+    throw "TODO";
+  }
+};

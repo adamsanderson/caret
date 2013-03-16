@@ -23,10 +23,30 @@
       .parent-element {
         outline: 1px solid #F00;
       }
+      
+      span.out {
+        color: #666;
+        background: #eee;
+      }
+      
+      .caret {
+        color: red;
+      }
+      
     </style>
   </head>
   <body>
     <h1>Caret</h1>
+    <div id='info'>
+      <p>
+        Before | After Caret: 
+        <span class='out' id='text-before'></span><span class='caret'>|</span><span class='out' id='text-after'></span>
+      </p>
+      
+      <p>
+        Current Tag: <span class='out' id='current-tag'> </span>
+      </p>
+    </div>
     <div contenteditable="true" id='content'>
       <p>
         This is a <i>demo</i> of the <code>Caret</code> component.  
@@ -48,9 +68,12 @@
     </footer>
     <script src="build/build.js" type="text/javascript" charset="utf-8"></script>
     <script>
-      var Caret = require('caret');
-      var el    = document.getElementById('content');
-      var caret = new Caret(el);
+      var Caret  = require('caret');
+      var el     = document.getElementById('content');
+      var before = document.getElementById('text-before');
+      var after  = document.getElementById('text-after');
+      var tag    = document.getElementById('current-tag');
+      var caret  = new Caret(el);
       
       caret.on('change', function(){
         var lastParent = document.querySelector('.parent-element');
@@ -59,9 +82,12 @@
         if (lastParent != currentParent){
           if (lastParent) lastParent.setAttribute("class", "");
           currentParent.setAttribute("class", "parent-element");
+          tag.textContent = currentParent.tagName;
         }
-      });
-            
+        
+        before.textContent = caret.textBefore();
+        after.textContent = caret.textAfter();        
+      });   
     </script>
   </body>
 </html>
