@@ -80,11 +80,11 @@
         var currentParent = this.parentElement();
         
         if (lastParent != currentParent){
-          tag.textContent = currentParent.tagName;
+          tag.textContent = tag.innerText = currentParent.tagName;
         }
         
-        before.textContent = caret.textBefore();
-        after.textContent = caret.textAfter();        
+        before.textContent = before.innerText = caret.textBefore();
+        after.textContent  = after.innerText  = caret.textAfter();        
       });   
     </script>
   </body>

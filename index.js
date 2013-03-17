@@ -22,7 +22,6 @@ Caret.prototype.bind = function(el) {
 
   var caret = this;
   function checkCaretPosition(){
-    // TODO: Only trigger events on real changes
     caret.emit("change");
   }
 };
@@ -46,7 +45,7 @@ Caret.prototype.textBefore = function(){
   if (document.getSelection){
     return getText(BEFORE);
   } else {
-    throw "TODO";
+    return getIeText(BEFORE);
   }
 };
 
@@ -57,7 +56,7 @@ Caret.prototype.textAfter = function(){
   if (document.getSelection){
     return getText(AFTER);
   } else {
-    throw "TODO";
+    return getIeText(AFTER);
   }
 };
 
@@ -75,4 +74,19 @@ function getText(direction){
   } else {
     return node.substringData(offset, node.length-1); 
   }
+}
+
+function getIeText(direction){
+  var range = document.selection.createRange();
+  var parent = range.parentElement();
+  
+  if (direction === BEFORE){
+    while (range.moveStart('character',-1) < 0 && parent == range.parentElement()){}
+    range.moveEnd('character',0);
+  } else {
+    while (range.moveEnd('character', 1) > 0 && parent == range.parentElement()){}
+    range.moveStart('character',0);
+  }
+  
+  return range.text;
 }
