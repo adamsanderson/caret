@@ -23,6 +23,20 @@ API
 
 **caret.textAfter()**: Returns the text after the caret within the current element.
 
+Example
+-------
+
+    var el = document.getElementById('content');
+    var caret = new Caret(el);
+    
+    caret.on('change', function(){
+      var text = this.textBefore();
+      var match = text.match(/@(\w+)$/);
+      if (match) {
+        console.log("Editing user name:", match[1]);
+      }
+    });
+
 
 License
 -------
