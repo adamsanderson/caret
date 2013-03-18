@@ -1,9 +1,11 @@
 caret
 =====
 
-Listen to and inspect the text caret.
+Listen to and inspect the browser caret.
 
 View the [demo](http://adamsanderson.github.com/caret/) for an example of the information you can get.
+
+This should work with IE8+ and all modern browsers.
 
 Installation
 ------------
@@ -23,8 +25,10 @@ API
 
 **caret.textAfter()**: Returns the text after the caret within the current element.
 
-Example
--------
+Examples
+--------
+
+Watch for when the user starts editing a twitter handle (ie: @someone).
 
     var el = document.getElementById('content');
     var caret = new Caret(el);
@@ -32,6 +36,7 @@ Example
     caret.on('change', function(){
       var text = this.textBefore();
       var match = text.match(/@(\w+)$/);
+      
       if (match) {
         console.log("Editing user name:", match[1]);
       }
