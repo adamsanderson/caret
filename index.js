@@ -31,11 +31,10 @@ Caret.prototype.parentElement = function(){
   
   if (document.getSelection){
     node = document.getSelection().focusNode;
+    return node.nodeType == ELEMENT_NODE ? node : node.parentElement;
   } else {
-    node = document.selection.createRange().parentElement();
+    return document.selection.createRange().parentElement();
   }
-  
-  return node.nodeType == ELEMENT_NODE ? node : node.parentElement;
 };
 
 /**
