@@ -78,13 +78,16 @@ function getText(direction){
 function getIeText(direction){
   var range = document.selection.createRange();
   var parent = range.parentElement();
+  var i = 0;
   
   if (direction === BEFORE){
-    while (range.moveStart('character',-1) < 0 && parent == range.parentElement()){}
-    range.moveEnd('character',0);
+    while (range.move('character',-1) && parent == range.parentElement()){ i++; }
+    range.move('character',1);
+    range.moveEnd('character',i);
   } else {
-    while (range.moveEnd('character', 1) > 0 && parent == range.parentElement()){}
-    range.moveStart('character',0);
+    while (range.move('character', 1) && parent == range.parentElement()){ i--; }
+    range.move('character', -1);
+    range.moveStart('character',i);
   }
   
   return range.text;
