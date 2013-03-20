@@ -10,7 +10,7 @@ var AFTER  =  1;
 module.exports = Caret;
 
 function Caret(el) {
-  this.el = el || document;
+  this.el = el || document.body;
   this.bind(el);
 }
 
@@ -56,6 +56,31 @@ Caret.prototype.textAfter = function(){
     return getText(AFTER);
   } else {
     return getIeText(AFTER);
+  }
+};
+
+Caret.prototype.moveToStart = function(){
+  if (document.getSelection){
+    this.el.focus();
+    document.getSelection().collapse(this.el,true);
+  } else {
+    throw "TODO";
+  }
+};
+
+Caret.prototype.moveToEnd = function(){
+  if (document.getSelection){
+    this.el.focus();
+    // Firefox will not select the end of the element if the last element is not a text node
+    // http://stackoverflow.com/questions/1125292/how-to-move-cursor-to-end-of-contenteditable-entity
+    if (!this.el.childNodes[this.el.childNodes.length - 1].nodeType !== TEXT_NODE){
+      this.el.appendChild(document.createTextNode(""));
+    }
+    var selection = document.getSelection();
+    selection.selectAllChildren(this.el);
+    selection.collapseToEnd();
+  } else {
+    throw "TODO";
   }
 };
 

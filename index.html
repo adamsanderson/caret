@@ -47,6 +47,11 @@
         Current Tag: <span class='out' id='current-tag'> </span>
       </p>
     </div>
+    <div>
+      Move the caret
+      <a href='#' id='move-to-start'>to start</a> | 
+      <a href='#' id='move-to-end'>to end</a> 
+    </div>
     <div contenteditable="true" id='content'>
       <p>
         This is a <i>demo</i> of the <code>Caret</code> component.  
@@ -69,6 +74,7 @@
     <script src="build/build.js" type="text/javascript" charset="utf-8"></script>
     <script>
       var Caret  = require('caret');
+      var events = require('component-event');
       var el     = document.getElementById('content');
       var before = document.getElementById('text-before');
       var after  = document.getElementById('text-after');
@@ -85,7 +91,15 @@
         
         before.textContent = before.innerText = caret.textBefore();
         after.textContent  = after.innerText  = caret.textAfter();        
-      });   
+      });
+      
+      events.bind(document.getElementById('move-to-start'), 'click', function(){
+        caret.moveToStart();
+      });
+      
+      events.bind(document.getElementById('move-to-end'), 'click', function(){
+        caret.moveToEnd();
+      });
     </script>
   </body>
 </html>
