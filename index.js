@@ -4,8 +4,8 @@ var events = require('event');
 var ELEMENT_NODE = document.ELEMENT_NODE;
 var TEXT_NODE    = document.TEXT_NODE;
 
-var BEFORE = -1;
-var AFTER  =  1;
+var BEFORE = {};
+var AFTER  = {};
 
 module.exports = Caret;
 
@@ -66,8 +66,8 @@ Caret.prototype.moveToStart = function(){
   } else {
     var range = document.body.createTextRange();
     range.moveToElementText(this.el);
-    range.collapse(true);
-    range.select()
+    range.collapse(true); // Collapse to Start
+    range.select();
   }
 };
 
@@ -85,8 +85,8 @@ Caret.prototype.moveToEnd = function(){
   } else {
     var range = document.body.createTextRange();
     range.moveToElementText(this.el);
-    range.collapse(false);
-    range.select()
+    range.collapse(false); // Collapse to End
+    range.select();
     
   }
 };
