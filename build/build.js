@@ -453,7 +453,10 @@ Caret.prototype.moveToStart = function(){
     this.el.focus();
     document.getSelection().collapse(this.el,true);
   } else {
-    throw "TODO";
+    var range = document.body.createTextRange();
+    range.moveToElementText(this.el);
+    range.collapse(true);
+    range.select()
   }
 };
 
@@ -469,7 +472,11 @@ Caret.prototype.moveToEnd = function(){
     selection.selectAllChildren(this.el);
     selection.collapseToEnd();
   } else {
-    throw "TODO";
+    var range = document.body.createTextRange();
+    range.moveToElementText(this.el);
+    range.collapse(false);
+    range.select()
+    
   }
 };
 
