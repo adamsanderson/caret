@@ -86,8 +86,36 @@ Caret.prototype.moveToEnd = function(){
     var range = document.body.createTextRange();
     range.moveToElementText(this.el);
     range.collapse(false); // Collapse to End
-    range.select();
-    
+    range.select();  
+  }
+};
+
+Caret.prototype.moveBefore = function(element){
+  if (document.getSelection){
+    this.el.focus();
+    var range = document.createRange();
+    range.setStartBefore(element);
+    range.collapse(true); // Collapse to Start
+    var selection = document.getSelection();
+    selection.removeAllRanges();
+    selection.addRange(range);
+  } else {
+    throw "Todo";
+  }
+};
+
+Caret.prototype.moveAfter = function(element){
+  if (document.getSelection){
+    this.el.focus();
+    var range = document.createRange();
+    range.setEndAfter(element);
+    range.collapse(false); // Collapse to End
+    var selection = document.getSelection();
+    selection.removeAllRanges();
+    selection.addRange(range);
+    this.el.focus();
+  } else {
+    throw "Todo";
   }
 };
 

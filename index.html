@@ -50,7 +50,9 @@
     <div>
       Move the caret
       <a href='#' id='move-to-start'>to start</a> | 
-      <a href='#' id='move-to-end'>to end</a> 
+      <a href='#' id='move-to-end'>to end</a> |
+      <a href='#' id='move-before'>before current element</a> | 
+      <a href='#' id='move-after'>after current element</a>
     </div>
     <div contenteditable="true" id='content'>
       <p>
@@ -99,6 +101,14 @@
       
       events.bind(document.getElementById('move-to-end'), 'click', function(){
         caret.moveToEnd();
+      });
+      
+      events.bind(document.getElementById('move-before'), 'click', function(){
+        caret.moveBefore(caret.parentElement());
+      });
+      
+      events.bind(document.getElementById('move-after'), 'click', function(){
+        caret.moveAfter(caret.parentElement());
       });
     </script>
   </body>
