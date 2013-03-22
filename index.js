@@ -93,12 +93,7 @@ Caret.prototype.moveToEnd = function(){
 Caret.prototype.moveBefore = function(element){
   if (document.getSelection){
     this.el.focus();
-    var range = document.createRange();
-    range.setStartBefore(element);
-    range.collapse(true); // Collapse to Start
-    var selection = document.getSelection();
-    selection.removeAllRanges();
-    selection.addRange(range);
+    moveRelative(element, BEFORE);
   } else {
     var range = document.body.createTextRange();
     var marker = createMarker();
@@ -114,15 +109,7 @@ Caret.prototype.moveBefore = function(element){
 Caret.prototype.moveAfter = function(element){
   if (document.getSelection){
     this.el.focus();
-    if (!element.childNodes[element.childNodes.length - 1].nodeType !== TEXT_NODE){
-      element.appendChild(document.createTextNode(""));
-    }
-    var range = document.createRange();
-    range.setEndAfter(element);
-    range.collapse(false); // Collapse to End
-    var selection = document.getSelection();
-    selection.removeAllRanges();
-    selection.addRange(range);
+    moveRelative(element, AFTER);
   } else {
     var range = document.body.createTextRange();
     var marker = createMarker();
@@ -167,6 +154,20 @@ function getIeText(direction){
   }
   
   return range.text;
+}
+
+function moveRelative(element, direction){
+  var range = document.createRange();
+  if (direction === BEFORE){
+    range.setStartBefore(element);
+    range.collapse(true); // Collapse to Start
+  } else {
+    range.setEndAfter(element);
+    range.collapse(false); // Collapse to End
+  }
+  var selection = document.getSelection();
+  selection.removeAllRanges();
+  selection.addRange(range);
 }
 
 // Create a random string by generating a large random number and then formatting it base 36.

@@ -51,8 +51,8 @@
       Move the caret
       <a href='#' id='move-to-start'>to start</a> | 
       <a href='#' id='move-to-end'>to end</a> |
-      <a href='#' id='move-before'>before current element</a> | 
-      <a href='#' id='move-after'>after current element</a>
+      <a href='#' id='move-before'>before "code" element</a> | 
+      <a href='#' id='move-after'>after "code" element</a>
     </div>
     <div contenteditable="true" id='content'>
       <p>
@@ -113,7 +113,7 @@
       
       // For the moment, pick a relative item to demo against:
       function getRelativeDemoItem(){
-        return document.getElementsByTagName('li')[0];
+        return document.getElementsByTagName('code')[0];
       }
     </script>
   </body>
