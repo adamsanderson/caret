@@ -17,12 +17,12 @@ function Caret(el) {
 Emitter(Caret.prototype);
 
 Caret.prototype.bind = function(el) {
+  var caret = this;
   events.bind(el, "keyup", checkCaretPosition);
   events.bind(el, "mouseup", checkCaretPosition);
 
-  var caret = this;
   function checkCaretPosition(){
-    caret.emit("change");
+    caret.moved();
   }
 };
 
@@ -69,6 +69,7 @@ Caret.prototype.moveToStart = function(){
     range.collapse(true); // Collapse to Start
     range.select();
   }
+  this.moved();
 };
 
 Caret.prototype.moveToEnd = function(){
@@ -88,6 +89,7 @@ Caret.prototype.moveToEnd = function(){
     range.collapse(false); // Collapse to End
     range.select();  
   }
+  this.moved();
 };
 
 Caret.prototype.moveBefore = function(element){
@@ -97,6 +99,7 @@ Caret.prototype.moveBefore = function(element){
   } else {
     moveIeRelative(element, BEFORE);
   }
+  this.moved();
 };
 
 Caret.prototype.moveAfter = function(element){
@@ -106,7 +109,12 @@ Caret.prototype.moveAfter = function(element){
   } else {
     moveIeRelative(element, AFTER);
   }
+  this.moved();
 };
+
+Caret.prototype.moved = function(){
+  this.emit("change");
+}
 
 function getText(direction){
   var selection = document.getSelection();
