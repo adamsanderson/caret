@@ -489,22 +489,38 @@ Caret.prototype.moveBefore = function(element){
     selection.removeAllRanges();
     selection.addRange(range);
   } else {
-    throw "Todo";
+    var range = document.body.createTextRange();
+    var marker = createMarker();
+    var parent = element.parentElement
+    insertBefore(parent, marker, element);
+    range.moveToElementText(marker);
+    range.collapse(true); // Collapse to Start
+    range.select();
+    parent.removeChild(marker);
   }
 };
 
 Caret.prototype.moveAfter = function(element){
   if (document.getSelection){
     this.el.focus();
+    if (!element.childNodes[element.childNodes.length - 1].nodeType !== TEXT_NODE){
+      element.appendChild(document.createTextNode(""));
+    }
     var range = document.createRange();
     range.setEndAfter(element);
     range.collapse(false); // Collapse to End
     var selection = document.getSelection();
     selection.removeAllRanges();
     selection.addRange(range);
-    this.el.focus();
   } else {
-    throw "Todo";
+    var range = document.body.createTextRange();
+    var marker = createMarker();
+    var parent = element.parentElement
+    insertAfter(parent, marker, element);
+    range.moveToElementText(marker);
+    range.collapse(false); // Collapse to End
+    range.select();
+    parent.removeChild(marker);
   }
 };
 
@@ -540,6 +556,28 @@ function getIeText(direction){
   }
   
   return range.text;
+}
+
+// Create a random string by generating a large random number and then formatting it base 36.
+function randomString(){
+  return Math.floor((Math.random() * 18446744073709552000)).toString(36);
+}
+
+function createMarker(){
+  var element = document.createElement('span');
+  element.innerText = randomString();
+  return element;
+}
+
+function insertBefore(el, newChild, refChild) {
+  console.log(el)
+  console.log(newChild)
+  console.log(refChild)
+  return el.insertBefore(newChild, refChild);
+}
+
+function insertAfter(el, newChild, refChild) {
+  return insertBefore(el, newChild, refChild.nextSibling);
 }
 });
 require.alias("component-emitter/index.js", "caret/deps/emitter/index.js");

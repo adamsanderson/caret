@@ -56,7 +56,7 @@
     </div>
     <div contenteditable="true" id='content'>
       <p>
-        This is a <i>demo</i> of the <code>Caret</code> component.  
+        This is a <i>demo</i> of the <code id='code-el'>Caret</code> component.  
         Click here and move the caret around either with the mouse or the keyboard.
       </p>
       
@@ -104,12 +104,17 @@
       });
       
       events.bind(document.getElementById('move-before'), 'click', function(){
-        caret.moveBefore(caret.parentElement());
+        caret.moveBefore(getRelativeDemoItem());
       });
       
       events.bind(document.getElementById('move-after'), 'click', function(){
-        caret.moveAfter(caret.parentElement());
+        caret.moveAfter(getRelativeDemoItem());
       });
+      
+      // For the moment, pick a relative item to demo against:
+      function getRelativeDemoItem(){
+        return document.getElementsByTagName('li')[0];
+      }
     </script>
   </body>
 </html>
