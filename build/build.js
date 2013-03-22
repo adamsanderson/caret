@@ -484,14 +484,7 @@ Caret.prototype.moveBefore = function(element){
     this.el.focus();
     moveRelative(element, BEFORE);
   } else {
-    var range = document.body.createTextRange();
-    var marker = createMarker();
-    var parent = element.parentElement
-    insertBefore(parent, marker, element);
-    range.moveToElementText(marker);
-    range.collapse(true); // Collapse to Start
-    range.select();
-    parent.removeChild(marker);
+    moveIeRelative(element, BEFORE);
   }
 };
 
@@ -500,14 +493,7 @@ Caret.prototype.moveAfter = function(element){
     this.el.focus();
     moveRelative(element, AFTER);
   } else {
-    var range = document.body.createTextRange();
-    var marker = createMarker();
-    var parent = element.parentElement
-    insertAfter(parent, marker, element);
-    range.moveToElementText(marker);
-    range.collapse(false); // Collapse to End
-    range.select();
-    parent.removeChild(marker);
+    moveIeRelative(element, AFTER);
   }
 };
 
@@ -559,6 +545,25 @@ function moveRelative(element, direction){
   selection.addRange(range);
 }
 
+function moveIeRelative(element, direction){
+  var range = document.body.createTextRange();
+  var marker = createMarker();
+  var parent = element.parentElement;
+  
+  if (direction === BEFORE) {
+    insertBefore(parent, marker, element);
+    range.moveToElementText(marker);
+    range.collapse(true); // Collapse to Start
+  } else {
+    insertAfter(parent, marker, element);
+    range.moveToElementText(marker);
+    range.collapse(false); // Collapse to End
+  }
+  
+  range.select();
+  parent.removeChild(marker);
+}
+
 // Create a random string by generating a large random number and then formatting it base 36.
 function randomString(){
   return Math.floor((Math.random() * 18446744073709552000)).toString(36);
@@ -571,9 +576,6 @@ function createMarker(){
 }
 
 function insertBefore(el, newChild, refChild) {
-  console.log(el)
-  console.log(newChild)
-  console.log(refChild)
   return el.insertBefore(newChild, refChild);
 }
 
