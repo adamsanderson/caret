@@ -113,7 +113,14 @@
       
       // For the moment, pick a relative item to demo against:
       function getRelativeDemoItem(){
-        return document.getElementsByTagName('code')[0];
+        var el = document.getElementsByTagName('code')[0];
+        if (!el) {
+          el = document.createElement('code');
+          el.textContent = el.innerText = "Hey you deleted the code element, here's a new one."
+          content.appendChild(el);
+        }
+        
+        return el;
       }
     </script>
   </body>
