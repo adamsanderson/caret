@@ -1,9 +1,9 @@
 caret
 =====
 
-Listen to and inspect the browser caret.
+Listen to, inspect, and move the browser caret.
 
-View the [demo](http://adamsanderson.github.com/caret/) for an example of the information you can get.
+View the [demo](http://adamsanderson.github.com/caret/) for an example of the information and operations available.
 
 This should work with IE8+ and all modern browsers.
 
@@ -24,6 +24,14 @@ API
 **caret.textBefore()**: Returns the text before the caret within the current element.
 
 **caret.textAfter()**: Returns the text after the caret within the current element.
+
+**caret.moveToStart()**: Moves the caret to the beginning of the element that the `Caret` was initialized with.
+
+**caret.moveToEnd()**: Moves the caret to the end of the element that the `Caret` was initialized with.
+
+**caret.moveBefore(element)**: Moves the caret just before the `element`.
+
+**caret.moveAfter(element)**: Moves the caret just after the `element`.
 
 Examples
 --------
