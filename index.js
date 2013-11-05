@@ -10,6 +10,7 @@ var AFTER  = {};
 module.exports = Caret;
 
 function Caret(el) {
+  if (!(this instanceof Caret)) return new Caret(el);
   this.el = el || document.body;
   this.bind(el);
 }
