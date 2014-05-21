@@ -47,9 +47,16 @@
         Current Tag: <span class='out' id='current-tag'> </span>
       </p>
     </div>
+    <div>
+      Move the caret
+      <a href='#' id='move-to-start'>to start</a> | 
+      <a href='#' id='move-to-end'>to end</a> |
+      <a href='#' id='move-before'>before "code" element</a> | 
+      <a href='#' id='move-after'>after "code" element</a>
+    </div>
     <div contenteditable="true" id='content'>
       <p>
-        This is a <i>demo</i> of the <code>Caret</code> component.  
+        This is a <i>demo</i> of the <code id='code-el'>Caret</code> component.  
         Click here and move the caret around either with the mouse or the keyboard.
       </p>
       
@@ -64,11 +71,12 @@
       </ul>
     </div>
     <footer>
-      See the <a href='https://github.com/adamsanderson/wysiwyg/'>GitHub repository</a> for more information.
+      See the <a href='https://github.com/adamsanderson/caret/'>GitHub repository</a> for more information.
     </footer>
     <script src="build/build.js" type="text/javascript" charset="utf-8"></script>
     <script>
       var Caret  = require('caret');
+      var events = require('component-event');
       var el     = document.getElementById('content');
       var before = document.getElementById('text-before');
       var after  = document.getElementById('text-after');
@@ -85,7 +93,35 @@
         
         before.textContent = before.innerText = caret.textBefore();
         after.textContent  = after.innerText  = caret.textAfter();        
-      });   
+      });
+      
+      events.bind(document.getElementById('move-to-start'), 'click', function(){
+        caret.moveToStart();
+      });
+      
+      events.bind(document.getElementById('move-to-end'), 'click', function(){
+        caret.moveToEnd();
+      });
+      
+      events.bind(document.getElementById('move-before'), 'click', function(){
+        caret.moveBefore(getRelativeDemoItem());
+      });
+      
+      events.bind(document.getElementById('move-after'), 'click', function(){
+        caret.moveAfter(getRelativeDemoItem());
+      });
+      
+      // For the moment, pick a relative item to demo against:
+      function getRelativeDemoItem(){
+        var el = document.getElementsByTagName('code')[0];
+        if (!el) {
+          el = document.createElement('code');
+          el.textContent = el.innerText = "Hey you deleted the code element, here's a new one."
+          content.appendChild(el);
+        }
+        
+        return el;
+      }
     </script>
   </body>
 </html>
