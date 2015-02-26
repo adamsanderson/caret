@@ -1,0 +1,23 @@
+{
+  "name": "caret",
+  "description": "Listen to and manipulate the text caret.",
+  "version": "0.0.1",
+  "keywords": [],
+  "dependencies": {
+    "component-emitter": "^1.2.0",
+    "component-event": "^0.1.4"
+  },
+  "development": {},
+  "license": "MIT",
+  "component": {
+    "scripts": [
+      "index.js"
+    ]
+  },
+  "main": "index.js",
+  "browser": {
+    "emitter": "component-emitter",
+    "event": "component-event"
+  },
+  "repository": "git://github.com/adamsanderson/caret.git"
+}
