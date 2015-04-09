@@ -122,15 +122,18 @@ function getText(direction){
   var node      = selection.focusNode;
   var offset    = selection.focusOffset;
 
-  if (node.nodeType == ELEMENT_NODE){
-    return '';
-  }
 
   if (direction === BEFORE){
-    return node.substringData(0, offset);
+    if (node.nodeType === TEXT_NODE) text = node.substringData(0, offset);
+    // Firefox reports an element node.
+    else text = node.textContent.substr(0, offset);
   } else {
-    return node.substringData(offset, node.length-1);
+    if (node.nodeType === TEXT_NODE) text = node.substringData(offset, node.length - 1);
+    // Firefox reports an element node.
+    else text = node.textContent.substr(offset, node.length - 1);
   }
+
+  return text;
 }
 
 function getIeText(direction){
