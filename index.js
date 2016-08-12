@@ -121,19 +121,22 @@ function getText(direction){
   var selection = document.getSelection();
   var node      = selection.focusNode;
   var offset    = selection.focusOffset;
+  var startIndex, endIndex;
 
-
-  if (direction === BEFORE){
-    if (node.nodeType === TEXT_NODE) text = node.substringData(0, offset);
-    // Firefox reports an element node.
-    else text = node.textContent.substr(0, offset);
+  if (direction === BEFORE) {
+    startIndex = 0;
+    endIndex = offset;
   } else {
-    if (node.nodeType === TEXT_NODE) text = node.substringData(offset, node.length - 1);
-    // Firefox reports an element node.
-    else text = node.textContent.substr(offset, node.length - 1);
+    startIndex = offset;
+    endIndex = node.length - 1;
   }
 
-  return text;
+  if (node.nodeType === TEXT_NODE) {
+    return node.substringData(startIndex, endIndex);
+  } else {
+    // Firefox may return elements, also empty elements will not have a text node.
+    return node.textContent.substr(startIndex, endIndex);
+  }
 }
 
 function getIeText(direction){
