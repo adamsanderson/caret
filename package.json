@@ -2,6 +2,11 @@
   "name": "component-caret",
   "description": "Listen to and manipulate the text caret.",
   "version": "0.0.1",
+  "author": "Adam Sanderson (http://monkeyandcrow.com)",
+  "contributors": [
+    "Oleg Slobodskoi",
+    "Julian Gruber"
+  ],
   "keywords": ["caret", "wysiwyg"],
   "dependencies": {
     "component-emitter": "^1.2.0",

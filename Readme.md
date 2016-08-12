@@ -59,3 +59,5 @@ License
 ---
 
 Adam Sanderson, http://monkeyandcrow.com
+
+With much help from: Oleg Slobodskoi and Julian Gruber
