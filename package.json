@@ -2,7 +2,7 @@
   "name": "component-caret",
   "description": "Listen to and manipulate the text caret.",
   "version": "0.0.1",
-  "keywords": [],
+  "keywords": ["caret", "wysiwyg"],
   "dependencies": {
     "component-emitter": "^1.2.0",
     "component-event": "^0.1.4"
@@ -15,6 +15,9 @@
     ]
   },
   "main": "index.js",
+  "scripts": {
+    "build": "browserify index.js -o build/build.js; browserify demo.js -o build/demo.js "
+  },
   "browser": {
     "emitter": "component-emitter",
     "event": "component-event"
