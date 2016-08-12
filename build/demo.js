@@ -1,4 +1,53 @@
 (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
+var Caret  = require('./index.js');
+var events = require('component-event');
+
+var el     = document.getElementById('content');
+var before = document.getElementById('text-before');
+var after  = document.getElementById('text-after');
+var tag    = document.getElementById('current-tag');
+var caret  = new Caret(el);
+
+caret.on('change', function(){
+  var lastParent = document.querySelector('.parent-element');
+  var currentParent = this.parentElement();
+  
+  if (lastParent != currentParent){
+    tag.textContent = tag.innerText = currentParent.tagName;
+  }
+  
+  before.textContent = before.innerText = caret.textBefore();
+  after.textContent  = after.innerText  = caret.textAfter();        
+});
+
+events.bind(document.getElementById('move-to-start'), 'click', function(){
+  caret.moveToStart();
+});
+
+events.bind(document.getElementById('move-to-end'), 'click', function(){
+  caret.moveToEnd();
+});
+
+events.bind(document.getElementById('move-before'), 'click', function(){
+  caret.moveBefore(getRelativeDemoItem());
+});
+
+events.bind(document.getElementById('move-after'), 'click', function(){
+  caret.moveAfter(getRelativeDemoItem());
+});
+
+// For the moment, pick a relative item to demo against:
+function getRelativeDemoItem(){
+  var el = document.getElementsByTagName('code')[0];
+  if (!el) {
+    el = document.createElement('code');
+    el.textContent = el.innerText = "Hey you deleted the code element, here's a new one."
+    content.appendChild(el);
+  }
+  
+  return el;
+}
+},{"./index.js":2,"component-event":4}],2:[function(require,module,exports){
 var Emitter = require('emitter');
 var events = require('event');
 
@@ -210,7 +259,7 @@ function insertAfter(el, newChild, refChild) {
   return insertBefore(el, newChild, refChild.nextSibling);
 }
 
-},{"emitter":2,"event":3}],2:[function(require,module,exports){
+},{"emitter":3,"event":4}],3:[function(require,module,exports){
 
 /**
  * Expose `Emitter`.
@@ -375,7 +424,7 @@ Emitter.prototype.hasListeners = function(event){
   return !! this.listeners(event).length;
 };
 
-},{}],3:[function(require,module,exports){
+},{}],4:[function(require,module,exports){
 var bind = window.addEventListener ? 'addEventListener' : 'attachEvent',
     unbind = window.removeEventListener ? 'removeEventListener' : 'detachEvent',
     prefix = bind !== 'addEventListener' ? 'on' : '';

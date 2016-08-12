@@ -10,6 +10,7 @@ var AFTER  = {};
 module.exports = Caret;
 
 function Caret(el) {
+  if (!(this instanceof Caret)) return new Caret(el);
   this.el = el || document.body;
   this.bind(el);
 }
@@ -28,7 +29,7 @@ Caret.prototype.bind = function(el) {
 
 Caret.prototype.parentElement = function(){
   var node;
-  
+
   if (document.getSelection){
     node = document.getSelection().focusNode;
     return node.nodeType == ELEMENT_NODE ? node : node.parentElement;
@@ -87,7 +88,7 @@ Caret.prototype.moveToEnd = function(){
     var range = document.body.createTextRange();
     range.moveToElementText(this.el);
     range.collapse(false); // Collapse to End
-    range.select();  
+    range.select();
   }
   this.moved();
 };
@@ -120,15 +121,21 @@ function getText(direction){
   var selection = document.getSelection();
   var node      = selection.focusNode;
   var offset    = selection.focusOffset;
-  
-  if (node.nodeType == ELEMENT_NODE){
-    return '';
-  }
-  
-  if (direction === BEFORE){
-    return node.substringData(0, offset); 
+  var startIndex, endIndex;
+
+  if (direction === BEFORE) {
+    startIndex = 0;
+    endIndex = offset;
   } else {
-    return node.substringData(offset, node.length-1); 
+    startIndex = offset;
+    endIndex = node.length - 1;
+  }
+
+  if (node.nodeType === TEXT_NODE) {
+    return node.substringData(startIndex, endIndex);
+  } else {
+    // Firefox may return elements, also empty elements will not have a text node.
+    return node.textContent.substr(startIndex, endIndex);
   }
 }
 
@@ -136,7 +143,7 @@ function getIeText(direction){
   var range = document.selection.createRange();
   var parent = range.parentElement();
   var i = 0;
-  
+
   if (direction === BEFORE){
     while (range.move('character',-1) && parent == range.parentElement()){ i++; }
     range.move('character',1);
@@ -146,7 +153,7 @@ function getIeText(direction){
     range.move('character', -1);
     range.moveStart('character',i);
   }
-  
+
   return range.text;
 }
 
@@ -168,7 +175,7 @@ function moveIeRelative(element, direction){
   var range = document.body.createTextRange();
   var marker = createMarker();
   var parent = element.parentElement;
-  
+
   if (direction === BEFORE) {
     insertBefore(parent, marker, element);
     range.moveToElementText(marker);
@@ -178,7 +185,7 @@ function moveIeRelative(element, direction){
     range.moveToElementText(marker);
     range.collapse(false); // Collapse to End
   }
-  
+
   range.select();
   parent.removeChild(marker);
 }
